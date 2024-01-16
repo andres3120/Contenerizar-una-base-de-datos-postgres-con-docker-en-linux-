@@ -1,0 +1,46 @@
+Manual de instalación 
+1)	 Descargar imagen de Linux, en este caso utilizaremos la maquina Red Hat Enterprise Linux Server release 7.6 (Maipo) proporcionada por Oracle 
+https://yum.oracle.com/oracle-linux-isos.html 
+ 
+2)	Para iniciar la máquina virtual usaremos el usuario root con su respectivo password= oracle
+3)	Para actualizar el sistema operativo abrimos una terminal y ponemos el siguiente comando:
+# yum update
+4)	Para descargar la última versión de Docker
+# yum install -y Docker 
+5)	Para inicializar Docker usamos el siguiente comando 
+# systemctl start Docker
+6)	Para habilitar usamos el comando:
+# systemctl enable Docker
+7)	Para verificar el estatus 
+# systemctl status docker
+8)	Verificamos la versión 
+# Docker --version
+  
+9)	Nos descargamos la imagen de Postgres para Docker.
+# docker pull postgres 
+10)	Para verificar que la imagen se instaló correctamente utilizamos
+# docker images
+ 
+11)	Para crear un nombre, usuario, password, base de datos, mapeo de puertos utilizamos el siguiente comando:
+# docker run --name grupo2-edifadmin -e POSTGRES_USER=amogro -e POSTGRES_PASSWORD=admin1234 -e POSTGRES_DB=efifadmindb -p 5433:5432 -d postgres
+12)	Ejecutamos el nombre creado en una consola bash:
+# docker exec -it grupo2-edifadmin bash
+13)	Ingresamos a la base de datos con el usuario creado:
+# psql -U amogro --db efifadmindb –password
+ 
+
+14)	En este punto ya tendremos una línea de comando para ingresar las tablas 
+ 
+15)	Creación de usuario solo Select
+# CREATE USER dvaca;
+16)	Asignamos una clave al usuario
+# ALTER USER dvaca with PASSWORD '1234admin';
+17)	Asignamos permisos para usar el esquema público al usuario:
+# GRANT USAGE ON SCHEMA public TO dvaca;
+18)	Asignamos permisos para que se conecte a la base de datos creada:
+# GRANT CONNECT ON DATABASE "efifadmindb" TO dvaca;
+19)	Asignamos permisos solo de select al usuario:
+# GRANT SELECT on ALL TABLES IN SCHEMA public TO dvaca;
+20)	Nos descargamos el Pg_admin, para poder gestionar la base de datos, 
+21)	Para conectarnos ponemos la ip del servidor, nombre de la base de datos, nombre de usuario y contraseña 
+ 
